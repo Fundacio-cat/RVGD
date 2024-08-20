@@ -11,12 +11,12 @@ from cercadors.cercador_google import GoogleCercador
 from cercadors.cercador_bing import BingCercador
 from repository.repository import Repository
 
-def parseja_arguments():
+def valora_os_argumentos():
     parser = argparse.ArgumentParser(description='Colle os parámetros do ficheiro json')
     parser.add_argument('-c', '--config', default='config.json', help='Ruta ao ficheiro de configuración. Por defecto é "config.json".')
     return parser.parse_args()
 
-def inicia_base_dades(config: Config) -> Repository:
+def inicia_base_datos(config: Config) -> Repository:
     try:
         repo = Repository(config)
         repo.connecta_bd()
@@ -25,7 +25,7 @@ def inicia_base_dades(config: Config) -> Repository:
         config.write_log(f"Erro na conexión a PostgreSQL: {e}", level=logging.ERROR)
         sys.exit(503)
 
-def obtenir_sensor() -> str:
+def obter_sensor() -> str:
     sensor = nom_sensor()
     if not sensor:
         config.write_log("Non se puido obter o nome do sensor", level=logging.ERROR)
@@ -47,19 +47,19 @@ def crea_navegador(navegador: int, navegador_text: str, config: Config):
         config.write_log(f"Erro: Non existe o navegador {navegador_text}", level=logging.ERROR)
         sys.exit(1)
 
-def crea_cercador(cercador: int, cercador_text: str, config: Config):
+def crea_buscador(buscador: int, buscador_text: str, config: Config):
 
     # Retorna Google se 1
-    if cercador == 1:
+    if buscador == 1:
         return GoogleCercador(config)
 
     # Retorna Bing se 2
-    elif cercador == 2:
+    elif buscador == 2:
         return BingCercador(config)
 
     # Se non está previsto, retorna un erro
     else:
-        config.write_log(f"Erro: Non existe o buscador {cercador_text}", level=logging.ERROR)
+        config.write_log(f"Erro: Non existe o buscador {buscador_text}", level=logging.ERROR)
         sys.exit(1)
 
 def executa_crawler(config: Config, cerca: str, id_cerca: int):
@@ -81,21 +81,21 @@ def executa_crawler(config: Config, cerca: str, id_cerca: int):
 
 
 if __name__ == "__main__":
-    args = parseja_arguments()
+    args = valora_os_argumentos()
     # Carga a configuración utilizando o ficheiro especificado ou o ficheiro por defecto
     config = Config.carrega_config(args.config)
-    repo = inicia_base_dades(config)
+    repo = inicia_base_datos(config)
     try:
 
         # Inicio do sensor
-        sensor = obtenir_sensor()
+        sensor = obter_sensor()
         config.set_repository(repo) # BD
         config.set_sensor(sensor)
         config.write_log(f"Sensor {sensor} iniciado correctamente", level=logging.INFO)
 
         # Selecciona o navegador
         int_navegador = repo.selecciona_navegador()
-        navegador_text = "Chrome" if int_navegador == 1 else "Firefox" if int_navegador == 2 else "Navegador desconegut"
+        navegador_text = "Chrome" if int_navegador == 1 else "Firefox" if int_navegador == 2 else "Navegador descoñecido"
         # Créao
         config.write_log(f"Creando o navegador {navegador_text} ...", level=logging.INFO)
         navegador = crea_navegador(int_navegador, navegador_text, config)
@@ -103,13 +103,13 @@ if __name__ == "__main__":
         config.write_log(f"Navegador {navegador_text} creado correctamente", level=logging.INFO)
 
         # Selecciona o buscador
-        int_cercador = repo.selecciona_cercador()
-        cercador_text = "Google" if int_cercador == 1 else "Bing" if int_cercador == 2 else "Navegador desconegut"
-        # Crea'l
-        config.write_log(f"Creando o buscador {cercador_text} ...", level=logging.INFO)
-        cercador = crea_cercador(int_cercador, cercador_text, config)
-        config.set_cercador(cercador)
-        config.write_log(f"Buscador {cercador_text} creado correctamente", level=logging.INFO)
+        int_buscador = repo.selecciona_cercador()
+        buscador_text = "Google" if int_buscador == 1 else "Bing" if int_buscador == 2 else "Buscador descoñecido"
+        # Créao
+        config.write_log(f"Creando o buscador {buscador_text} ...", level=logging.INFO)
+        buscador = crea_buscador(int_buscador, buscador_text, config)
+        config.set_cercador(buscador)
+        config.write_log(f"Buscador {buscador_text} creado correctamente", level=logging.INFO)
 
         id_cerca, cerca = repo.seguent_cerca(sensor)
         if cerca:
