@@ -18,8 +18,8 @@ class FirefoxNavegador(NavegadorBase):
 
         if user_agent:
             options = Options()
-            #options.add_argument(f"user-agent={user_agent}")
-            options.set_preference('intl.accept_languages', 'ca')
+            options.add_argument(f"user-agent={user_agent}")
+            options.set_preference('intl.accept_languages', 'gl')
             driver_path = os.path.join(
                 self.config.current_directory, "Controladors", self.config.FIREFOX_DRIVER_PATH)
             service = Service(driver_path)
