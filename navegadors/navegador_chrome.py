@@ -19,6 +19,7 @@ class ChromeNavegador(NavegadorBase):
         if user_agent:
             options = Options()
             options.add_argument(f"user-agent={user_agent}")
+            options.set_preference('intl.accept_languages', 'gl')
             # NO FUNCIONA:
             #options.add_argument("--lang=en")
             #options.add_argument("--headless")
