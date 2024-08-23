@@ -26,7 +26,7 @@ class GoogleCercador(CercadorBase):
             buttons = self.browser.find_elements(By.XPATH, '//button')
             for button in buttons:
                 try:
-                    if button.find_element(By.XPATH, './/div[contains(text(), "Accepta-ho tot")]'):
+                    if button.find_element(By.XPATH, './/div[contains(text(), "Aceptar todo")]'):
                         button.click()
                         acceptat = True
                         break  # Afegeix un break aquí per sortir del bucle un cop acceptat
