@@ -12,3 +12,7 @@ git clone https://github.com/paufundacio/RVGD.git
 */15 9-21 * * 1-5 bash /home/galego/RVGD/executa_galego.bash
 0 1 * * * sudo /sbin/shutdown -r # Reinicia á 1 da mañá todos os días
 ```
+
+### Agradecementos
+
+A Miguel Cabeza. Orgulloso vigués e afeccionado do Celta de Vigo.

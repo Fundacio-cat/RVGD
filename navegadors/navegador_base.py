@@ -8,34 +8,33 @@ class NavegadorBase(ABC):
 
     def __init__(self, config: Config):
         """
-        Inicialitza les variables de classe i crida a la funció init_navegador, implementada per les classes filles.
+        Inicializa as variables de clase e chama á función init_navegador, implementada polas clases fillas.
         """
         try:
             self.config = config
             self.repository = config.repository
             self.id_navegador_db, self.browser = self.init_navegador()
         except:
-            raise ValueError(
-                "Error de configuració del navegador. No es troba el repository")
+            raise ValueError("Erro de configuración do navegador. Non se atopa o repository")
 
     @abstractmethod
     def init_navegador(self) -> Tuple[int, WebDriver]:
         """
-        Inicialitza el navegador.
+        Inicializa o navegador.
         """
         pass
 
     def captura_pantalla(self, nom: str) -> None:
         """
-        Realitza una captura de pantalla.
+        Realiza unha captura de pantalla.
 
         Args:
-        - nom: Nom del fitxer on es guardarà la captura.
+        - nome: Nome do ficheiro onde se gardará a captura.
         """
         self.browser.save_screenshot(nom)
 
-    def tanca_navegador(self):
+    def pecha_navegador(self):
         """
-        Tanca el navegador.
+        Pecha o navegador.
         """
         self.browser.quit()

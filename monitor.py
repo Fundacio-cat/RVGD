@@ -125,7 +125,7 @@ if __name__ == "__main__":
     finally:
         # Intenta pechar o navegador e a conexión coa base de datos, independentemente de se houbo erros ou non.
         try:
-            navegador.tanca_navegador()
+            navegador.pecha_navegador()
         except Exception as e:
             config.write_log(f"Erro pechando o navegador: {e}", level=logging.ERROR)
 
