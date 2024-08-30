@@ -103,7 +103,7 @@ if __name__ == "__main__":
         # Créao
         config.write_log(f"Creando o buscador {buscador_text} ...", level=logging.INFO)
         buscador = crea_buscador(int_buscador, buscador_text, config)
-        config.set_cercador(buscador)
+        config.set_buscador(buscador)
         config.write_log(f"Buscador {buscador_text} creado correctamente", level=logging.INFO)
 
         id_cerca, cerca = repo.seguinte_busca(sensor)
