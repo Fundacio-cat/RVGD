@@ -60,9 +60,9 @@ def crea_buscador(buscador: int, buscador_text: str, config: Config):
 def executa_crawler(config: Config, busca: str, id_busca: int, navegador_text: str, int_tamano: int):
 
     try:
-        resultats = config.buscador.garda_resultados(busca, navegador_text)
+        resultados = config.buscador.garda_resultados(busca, navegador_text)
         logging.info(f"Gardando na base de datos os resultados para a busca {busca}")
-        for posicion, datos in resultats.items():
+        for posicion, datos in resultados.items():
             logging.info(f"Gardando na base de datos a posición {posicion}, co sensor {config.sensor}")
             repo.garda_bd(
                 id_busca,
