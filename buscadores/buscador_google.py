@@ -51,11 +51,11 @@ class GoogleBuscador(BuscadorBase):
 
         return id_buscador_db
 
-    def compon_nome_captura(self, busca, suffix=None):
+    def compon_nome_captura(self, busca, navegador_text, suffix=None):
         current_directory = self.config.current_directory
         busca_sen_espazos = busca.replace(' ', '_')
         data_hora_actual = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        nome_base = f"{current_directory}{sep}{self.config.directorio_Imaxes}{sep}{self.config.sensor}_Google_{busca_sen_espazos}_{data_hora_actual}"
+        nome_base = f"{current_directory}{sep}{self.config.directorio_Imaxes}{sep}{self.config.sensor}_{navegador_text}_Google_{busca_sen_espazos}_{data_hora_actual}"
         if suffix:
             nome_captura = f"{nome_base}_{suffix}.png"
         else:
@@ -64,7 +64,7 @@ class GoogleBuscador(BuscadorBase):
         asegura_directorio_existe(os.path.dirname(nome_captura))
         return nome_captura
 
-    def garda_resultados(self, busca):
+    def garda_resultados(self, busca, navegador_text):
         navegador = self.config.navegador
         browser = self.browser
 
@@ -85,8 +85,8 @@ class GoogleBuscador(BuscadorBase):
 
         while resultados_gardados <= 10:
             sleep(self.config.tempo_espera_procesos)
-            nome_captura_1 = self.compon_nome_captura(busca)
-            nome_captura_2 = self.compon_nome_captura(busca, suffix="2a")
+            nome_captura_1 = self.compon_nome_captura(busca, navegador_text)
+            nome_captura_2 = self.compon_nome_captura(busca, navegador_text, suffix="2a")
 
             navegador.captura_pantalla(nome_captura_1)
             resultados_busca = browser.find_elements(By.XPATH, '//a[h3]')

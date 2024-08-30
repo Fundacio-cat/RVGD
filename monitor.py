@@ -57,9 +57,10 @@ def crea_buscador(buscador: int, buscador_text: str, config: Config):
         config.write_log(f"Erro: Non existe o buscador {buscador_text}", level=logging.ERROR)
         sys.exit(1)
 
-def executa_crawler(config: Config, busca: str, id_busca: int):
+def executa_crawler(config: Config, busca: str, id_busca: int, navegador_text: str, int_tamano: int):
+
     try:
-        resultats = config.buscador.garda_resultados(busca)
+        resultats = config.buscador.garda_resultados(busca, navegador_text)
         logging.info(f"Gardando na base de datos os resultados para a busca {busca}")
         for posicion, datos in resultats.items():
             logging.info(f"Gardando na base de datos a posición {posicion}, co sensor {config.sensor}")
@@ -69,7 +70,8 @@ def executa_crawler(config: Config, busca: str, id_busca: int):
                 datos.get('titulo', ''),
                 datos.get('url', ''),
                 datos.get('description', ''),
-                False
+                False,
+                int_tamano
             )
     except Exception as e:
         config.write_log(f"Erro na execución do crawler para a busca {busca}: {e}", level=logging.ERROR)
@@ -114,7 +116,8 @@ if __name__ == "__main__":
         id_busca, busca = repo.seguinte_busca(sensor)
         if busca:
             config.write_log(f"Busca a executar: {busca}", level=logging.INFO)
-            executa_crawler(config, busca, id_busca)
+            executa_crawler(config, busca, id_busca, navegador_text, int_tamano)
+
         else:
             config.write_log("Non se obtivo ningunha busca", level=logging.WARNING)
 
