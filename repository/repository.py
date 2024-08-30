@@ -90,12 +90,12 @@ class Repository:
     def seguinte_busca(self, sensor):
         try:
             # Executar a instrución SQL para obter o ID da seguinte busca
-            select_integral = "SELECT seguent_cerca_filtrada('{}');".format(sensor)
+            select_integral = "SELECT seguinte_busca_filtrada('{}');".format(sensor)
             self.cursor.execute(select_integral)
             int_busca = self.cursor.fetchone()[0]
 
             # Executar a instrución SQL para obter a consulta str da busca
-            select_busca = "SELECT consulta FROM cerques WHERE cerqId = {};".format(int_busca)
+            select_busca = "SELECT consulta FROM buscas WHERE buscaid = {};".format(int_busca)
             self.cursor.execute(select_busca)
             busca = self.cursor.fetchone()[0]
             return int_busca, busca
@@ -106,15 +106,15 @@ class Repository:
     def selecciona_medidas(self):
         try:
             # Executar a instrución SQL para obter o ID da seguinte busca
-            select_medidas = "SELECT selecciona_mides();"
+            select_medidas = "SELECT selecciona_medidas();"
             self.cursor.execute(select_medidas)
             int_medida = self.cursor.fetchone()[0]
 
-            select_anchura = f"SELECT amplada FROM mides WHERE midaid = {int_medida};"
+            select_anchura = f"SELECT anchura FROM medidas WHERE medidaid = {int_medida};"
             self.cursor.execute(select_anchura)
             anchura = self.cursor.fetchone()[0]
 
-            select_altura = f"SELECT altura FROM mides WHERE midaid = {int_medida};"
+            select_altura = f"SELECT altura FROM medidas WHERE medidaid = {int_medida};"
             self.cursor.execute(select_altura)
             altura = self.cursor.fetchone()[0]
 
@@ -140,7 +140,7 @@ class Repository:
     def selecciona_buscador(self):
         try:
             # Executar a instrución SQL para obter o ID da seguinte busca
-            select_buscador = "SELECT selecciona_cercador();"
+            select_buscador = "SELECT selecciona_buscador();"
             self.cursor.execute(select_buscador)
             int_buscador = self.cursor.fetchone()[0]
 
