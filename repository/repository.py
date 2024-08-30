@@ -38,6 +38,8 @@ class Repository:
             raise ValueError(f"Erro na conexión a PostgreSQL: {e}")
 
     def garda_bd(self, int_busca, posicion, titulo, url, description, noticia, int_tamano):
+
+        # O módulo de novas foi planteado pero non se desenvolveu.
         try:
             now = datetime.now()
             if titulo is not None:
@@ -46,15 +48,15 @@ class Repository:
             if description is not None:
                 description = description.replace("'", "''")
 
-            insert_query = "INSERT INTO resultats (sensor, hora, navegador, cercador, cerca, posicio, titol, url, descripcio, noticia, mida) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            values = (self.config.sensor, now, self.config.navegador.id_navegador_db, self.config.buscador.id_buscador_db, int_busca, posicion, titulo, url, description, noticia, int_tamano)
+            insert_query = "INSERT INTO resultados (sensor, hora, navegador, buscador, busca, posicion, titulo, url, descripcion, medida) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            values = (self.config.sensor, now, self.config.navegador.id_navegador_db, self.config.buscador.id_buscador_db, int_busca, posicion, titulo, url, description, int_tamano)
 
             self.cursor.execute(insert_query, values)
             self.conn.commit()
         except psycopg2.Error as db_error:
             self.config.write_log(f"Erro na conexión a PostgreSQL: {db_error}", level=logging.ERROR)
 
-    def mock_garda_bd(self, int_busca, posicion, titulo, url, description, noticia, int_tamano):
+    def mock_garda_bd(self, int_busca, posicion, titulo, url, description, int_tamano):
         try:
             now = datetime.now()
             if titulo is not None:
@@ -63,8 +65,8 @@ class Repository:
             if description is not None:
                 description = description.replace("'", "''")
 
-            insert_query = "INSERT INTO resultats (sensor, hora, navegador, cercador, cerca, posicio, titol, url, descripcio, noticia, mida) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            values = (self.config.sensor, now, self.config.navegador.id_navegador_db, self.config.buscador.id_buscador_db, int_busca, posicion, titulo, url, description, noticia, int_tamano)
+            insert_query = "INSERT INTO resultados (sensor, hora, navegador, buscador, cerca, posicion, titulo, url, descripcion, medida) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            values = (self.config.sensor, now, self.config.navegador.id_navegador_db, self.config.buscador.id_buscador_db, int_busca, posicion, titulo, url, description, int_tamano)
 
             # self.cursor.execute(insert_query, values)
             # self.conn.commit()
