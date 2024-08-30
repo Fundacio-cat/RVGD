@@ -57,22 +57,22 @@ def crea_buscador(buscador: int, buscador_text: str, config: Config):
         config.write_log(f"Erro: Non existe o buscador {buscador_text}", level=logging.ERROR)
         sys.exit(1)
 
-def executa_crawler(config: Config, cerca: str, id_cerca: int):
+def executa_crawler(config: Config, busca: str, id_busca: int):
     try:
-        resultats = config.cercador.guarda_resultats(cerca)
-        logging.info(f"Gardando na base de datos os resultados para a busca {cerca}")
-        for posicio, dades in resultats.items():
-            logging.info(f"Gardando na base de datos a posición {posicio}, co sensor {config.sensor}")
+        resultats = config.buscador.garda_resultados(busca)
+        logging.info(f"Gardando na base de datos os resultados para a busca {busca}")
+        for posicion, datos in resultats.items():
+            logging.info(f"Gardando na base de datos a posición {posicion}, co sensor {config.sensor}")
             repo.garda_bd(
-                id_cerca,
-                posicio,
-                dades.get('titol', ''),
-                dades.get('url', ''),
-                dades.get('description', ''),
+                id_busca,
+                posicion,
+                datos.get('titol', ''),
+                datos.get('url', ''),
+                datos.get('description', ''),
                 False
             )
     except Exception as e:
-        config.write_log(f"Erro na execución do crawler para a busca {cerca}: {e}", level=logging.ERROR)
+        config.write_log(f"Erro na execución do crawler para a busca {busca}: {e}", level=logging.ERROR)
 
 
 if __name__ == "__main__":
@@ -106,10 +106,10 @@ if __name__ == "__main__":
         config.set_buscador(buscador)
         config.write_log(f"Buscador {buscador_text} creado correctamente", level=logging.INFO)
 
-        id_cerca, cerca = repo.seguinte_busca(sensor)
-        if cerca:
-            config.write_log(f"Busca a executar: {cerca}", level=logging.INFO)
-            executa_crawler(config, cerca, id_cerca)
+        id_busca, busca = repo.seguinte_busca(sensor)
+        if busca:
+            config.write_log(f"Busca a executar: {busca}", level=logging.INFO)
+            executa_crawler(config, busca, id_busca)
         else:
             config.write_log("Non se obtivo ningunha busca", level=logging.WARNING)
 
