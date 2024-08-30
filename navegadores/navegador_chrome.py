@@ -26,6 +26,7 @@ class ChromeNavegador(NavegadorBase):
 
             try:
                 browser = webdriver.Chrome(service=service, options=options)
+                browser.set_window_size(self.anchura, self.altura)
             except Exception as e:
                 self.config.write_log(f"Erro iniciando o navegador Chrome: {e}", level=logging.ERROR)
                 raise ValueError("Erro iniciando o navegador Chrome")

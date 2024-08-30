@@ -102,6 +102,27 @@ class Repository:
         except psycopg2.Error as db_error:
             self.config.write_log(f"Erro na conexión a PostgreSQL: {db_error}", level=logging.ERROR)
             return None, None
+        
+    def selecciona_medidas(self):
+        try:
+            # Executar a instrución SQL para obter o ID da seguinte busca
+            select_medidas = "SELECT selecciona_mides();"
+            self.cursor.execute(select_medidas)
+            int_medida = self.cursor.fetchone()[0]
+
+            select_anchura = f"SELECT amplada FROM mides WHERE midaid = {int_medida};"
+            self.cursor.execute(select_anchura)
+            anchura = self.cursor.fetchone()[0]
+
+            select_altura = f"SELECT altura FROM mides WHERE midaid = {int_medida};"
+            self.cursor.execute(select_altura)
+            altura = self.cursor.fetchone()[0]
+
+            return int_medida, anchura, altura
+
+        except psycopg2.Error as db_error:
+            self.config.write_log(f"Erro na conexión a PostgreSQL: {db_error}", level=logging.ERROR)
+            return None, None
 
     def selecciona_navegador(self):
         try:

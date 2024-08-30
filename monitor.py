@@ -31,15 +31,15 @@ def obter_sensor() -> str:
         sys.exit(1)
     return sensor
 
-def crea_navegador(navegador: int, navegador_text: str, config: Config):
+def crea_navegador(navegador: int, navegador_text: str, anchura: int, altura: int, config: Config):
 
     # Retorna o navegador Chrome se 1
     if navegador == 1:
-        return ChromeNavegador(config)
+        return ChromeNavegador(config, anchura, altura)
 
     # Retorna o navegador Firefox se 2
     elif navegador == 2:
-        return FirefoxNavegador(config)
+        return FirefoxNavegador(config, anchura, altura)
 
     # Se non está previsto, retorna un erro
     else:
@@ -66,7 +66,7 @@ def executa_crawler(config: Config, busca: str, id_busca: int):
             repo.garda_bd(
                 id_busca,
                 posicion,
-                datos.get('titol', ''),
+                datos.get('titulo', ''),
                 datos.get('url', ''),
                 datos.get('description', ''),
                 False
@@ -88,12 +88,17 @@ if __name__ == "__main__":
         config.set_sensor(sensor)
         config.write_log(f"Sensor {sensor} iniciado correctamente", level=logging.INFO)
 
+        # Colle as medidas do dispositivo
+        int_tamano, anchura, altura = repo.selecciona_medidas()
+        tamano_text = "tamaño de móbil" if int_tamano == 1 else "tamaño de sobremesa" if int_tamano == 2 else "tamaño descoñecido"
+        config.write_log(f"Utilizarase o {tamano_text} ...", level=logging.INFO)
+
         # Selecciona o navegador
         int_navegador = repo.selecciona_navegador()
         navegador_text = "Chrome" if int_navegador == 1 else "Firefox" if int_navegador == 2 else "Navegador descoñecido"
         # Créao
         config.write_log(f"Creando o navegador {navegador_text} ...", level=logging.INFO)
-        navegador = crea_navegador(int_navegador, navegador_text, config)
+        navegador = crea_navegador(int_navegador, navegador_text, anchura, altura, config)
         config.set_navegador(navegador)
         config.write_log(f"Navegador {navegador_text} creado correctamente", level=logging.INFO)
 
