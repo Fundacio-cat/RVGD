@@ -47,7 +47,7 @@ class Repository:
                 description = description.replace("'", "''")
 
             insert_query = "INSERT INTO resultats (sensor, hora, navegador, cercador, cerca, posicio, titol, url, descripcio, noticia) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            values = (self.config.sensor, now, self.config.navegador.id_navegador_db, self.config.cercador.id_buscador_db, int_busca, posicion, titulo, url, description, noticia)
+            values = (self.config.sensor, now, self.config.navegador.id_navegador_db, self.config.buscador.id_buscador_db, int_busca, posicion, titulo, url, description, noticia)
 
             self.cursor.execute(insert_query, values)
             self.conn.commit()
@@ -64,7 +64,7 @@ class Repository:
                 description = description.replace("'", "''")
 
             insert_query = "INSERT INTO resultats (sensor, hora, navegador, cercador, cerca, posicio, titol, url, descripcio, noticia) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            values = (self.config.sensor, now, self.config.navegador.id_navegador_db, self.config.cercador.id_buscador_db, int_busca, posicion, titulo, url, description, noticia)
+            values = (self.config.sensor, now, self.config.navegador.id_navegador_db, self.config.buscador.id_buscador_db, int_busca, posicion, titulo, url, description, noticia)
 
             # self.cursor.execute(insert_query, values)
             # self.conn.commit()
