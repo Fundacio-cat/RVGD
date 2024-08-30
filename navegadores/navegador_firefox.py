@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
-from navegadors.navegador_base import NavegadorBase
+from navegadores.navegador_base import NavegadorBase
 import os
 import logging
 
@@ -11,7 +11,7 @@ class FirefoxNavegador(NavegadorBase):
     def init_navegador(self):
         browser = None
         id_navegador_db = 2
-        user_agent = self.repository.cerca_userAgent(id_navegador_db)
+        user_agent = self.repository.busca_userAgent(id_navegador_db)
 
         if user_agent:
             options = Options()

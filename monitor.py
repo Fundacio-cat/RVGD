@@ -4,11 +4,10 @@ import logging
 import sys
 import argparse
 from utils.config import Config
-from utils.utils import nom_sensor
-from navegadors.navegador_chrome import ChromeNavegador
-from navegadors.navegador_firefox import FirefoxNavegador
-from cercadors.cercador_google import GoogleCercador
-from cercadors.cercador_bing import BingCercador
+from utils.utils import nome_sensor
+from navegadores.navegador_chrome import ChromeNavegador
+from navegadores.navegador_firefox import FirefoxNavegador
+from buscadores.buscador_google import GoogleBuscador
 from repository.repository import Repository
 
 def valora_os_argumentos():
@@ -19,14 +18,14 @@ def valora_os_argumentos():
 def inicia_base_datos(config: Config) -> Repository:
     try:
         repo = Repository(config)
-        repo.connecta_bd()
+        repo.conecta_bd()
         return repo
     except Exception as e:
         config.write_log(f"Erro na conexión a PostgreSQL: {e}", level=logging.ERROR)
         sys.exit(503)
 
 def obter_sensor() -> str:
-    sensor = nom_sensor()
+    sensor = nome_sensor()
     if not sensor:
         config.write_log("Non se puido obter o nome do sensor", level=logging.ERROR)
         sys.exit(1)
@@ -51,11 +50,7 @@ def crea_buscador(buscador: int, buscador_text: str, config: Config):
 
     # Retorna Google se 1
     if buscador == 1:
-        return GoogleCercador(config)
-
-    # Retorna Bing se 2
-    elif buscador == 2:
-        return BingCercador(config)
+        return GoogleBuscador(config)
 
     # Se non está previsto, retorna un erro
     else:
@@ -68,7 +63,7 @@ def executa_crawler(config: Config, cerca: str, id_cerca: int):
         logging.info(f"Gardando na base de datos os resultados para a busca {cerca}")
         for posicio, dades in resultats.items():
             logging.info(f"Gardando na base de datos a posición {posicio}, co sensor {config.sensor}")
-            repo.guarda_bd(
+            repo.garda_bd(
                 id_cerca,
                 posicio,
                 dades.get('titol', ''),
@@ -103,7 +98,7 @@ if __name__ == "__main__":
         config.write_log(f"Navegador {navegador_text} creado correctamente", level=logging.INFO)
 
         # Selecciona o buscador
-        int_buscador = repo.selecciona_cercador()
+        int_buscador = repo.selecciona_buscador()
         buscador_text = "Google" if int_buscador == 1 else "Bing" if int_buscador == 2 else "Buscador descoñecido"
         # Créao
         config.write_log(f"Creando o buscador {buscador_text} ...", level=logging.INFO)
@@ -111,7 +106,7 @@ if __name__ == "__main__":
         config.set_cercador(buscador)
         config.write_log(f"Buscador {buscador_text} creado correctamente", level=logging.INFO)
 
-        id_cerca, cerca = repo.seguent_cerca(sensor)
+        id_cerca, cerca = repo.seguinte_busca(sensor)
         if cerca:
             config.write_log(f"Busca a executar: {cerca}", level=logging.INFO)
             executa_crawler(config, cerca, id_cerca)

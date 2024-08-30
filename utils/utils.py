@@ -2,34 +2,34 @@ import socket
 import os
 
 
-def nom_sensor():
+def nome_sensor():
     """
-    Retorna el nom del host del sistema operatiu. 
-    Aquesta funció ha estat modificada per ser compatible tant amb Linux com amb Windows.
+    Devolve o nome do host do sistema operativo.
+    Esta función foi modificada para ser compatible tanto con Linux como con Windows.
 
     Returns:
-    - string: Els primers 5 caràcters del nom del host. Si hi ha un error, retorna None.
+    - string: Os primeiros 5 caracteres do nome do host. Se hai un erro, devolve None.
     """
     try:
-        # Obté el nom complet del host utilitzant la biblioteca socket.
-        # Aquest mètode és multiplataforma i funciona tant en Linux com en Windows.
+        # Obtén o nome completo do host utilizando a biblioteca socket.
+        # Este método é multiplataforma e funciona tanto en Linux como en Windows.
         hostname = socket.gethostname()
 
-        # Agafa els primers 5 caràcters del nom del host.
+        # Colle os primeiros 5 caracteres do nome do host.
         sensor = hostname[:5]
         return sensor
     except Exception as e:
-        # Registra l'error si es produeix algun problema obtenint el nom del host.
-        print(f"Error obtenint el nom del sensor: {e}")
+        # Registra o erro se se produce algún problema ao obter o nome do host.
+        print(f"Erro obtendo o nome do sensor: {e}")
         return None
 
 
-def assegura_directori_existeix(directori):
+def asegura_directorio_existe(directorio):
     """
-    Crea un directori si no existeix.
+    Crea un directorio se non existe.
 
-    Arguments:
-    - directori (str): El directori que es vol crear.
+    Argumentos:
+    - directorio (str): O directorio que se quere crear.
     """
-    if not os.path.exists(directori):
-        os.makedirs(directori)
+    if not os.path.exists(directorio):
+        os.makedirs(directorio)
