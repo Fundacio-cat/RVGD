@@ -55,7 +55,7 @@ class GoogleBuscador(BuscadorBase):
         current_directory = self.config.current_directory
         busca_sen_espazos = busca.replace(' ', '_')
         data_hora_actual = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        nome_base = f"{current_directory}{sep}{self.config.directori_Imatges}{sep}{self.config.sensor}_Google_{busca_sen_espazos}_{data_hora_actual}"
+        nome_base = f"{current_directory}{sep}{self.config.directorio_Imaxes}{sep}{self.config.sensor}_Google_{busca_sen_espazos}_{data_hora_actual}"
         if suffix:
             nome_captura = f"{nome_base}_{suffix}.png"
         else:
