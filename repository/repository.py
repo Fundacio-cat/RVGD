@@ -77,7 +77,7 @@ class Repository:
 
     def busca_userAgent(self, navegador):
         try:
-            select_query = f"SELECT useragent FROM navegadors WHERE navId = {navegador};"
+            select_query = f"SELECT useragent FROM navegadores WHERE navId = {navegador};"
             self.cursor.execute(select_query)
             resultado = self.cursor.fetchone()
             if resultado:

@@ -13,6 +13,12 @@ git clone https://github.com/paufundacio/RVGD.git
 0 1 * * * sudo /sbin/shutdown -r # Reinicia á 1 da mañá todos os días
 ```
 
+# Lingua
+
+A librería utilizada para detectar a lingua de cada páxina web é a seguinte:
+
+https://github.com/aboSamoor/polyglot
+
 ### Agradecementos
 
 A Miguel Cabeza. Orgulloso vigués e afeccionado do Celta de Vigo.
