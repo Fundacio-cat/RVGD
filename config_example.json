@@ -1,0 +1,15 @@
+{
+  "tempo_espera_procesos": 1,
+  "tempo_espera_buscadores": 5,
+  "numero_de_buscas_por_execucion": 1,
+  "ficheiro_logs": "logs/monitor.log",
+  "nivel_logging": "INFO",
+  "directorio_Imaxes": "Captures",
+  "CHROME_DRIVER_PATH": "chromedriver",
+  "FIREFOX_DRIVER_PATH": "geckodriver",
+  "host": "192.168.0.1",
+  "port": "5432",
+  "database": "XMCD",
+  "user": "XMCD",
+  "password": "XMCD"
+}
