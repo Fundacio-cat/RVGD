@@ -87,6 +87,10 @@ class GoogleBuscador(BuscadorBase):
 
         while resultados_gardados <= 10:
             sleep(self.config.tempo_espera_procesos)
+
+            # Captura o buscador e os resultados da primeira páxina
+            navegador.captura_pantalla("actual.png")
+
             nome_captura_1 = self.compon_nome_captura(busca, navegador_text)
             nome_captura_2 = self.compon_nome_captura(busca, navegador_text, suffix="2a")
 
